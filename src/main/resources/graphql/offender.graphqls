@@ -1,21 +1,29 @@
 type Query {
+    # Get a list of offenders
     offenders: [Offender]
+    # Get a list of offenders last name
     offendersByLastName (lastName: String): [Offender]
+    # Get a specific offender by id (also known as NOMS or Prison number)
     offenderById (id: String): Offender
 }
 
 type Offender {
+    # AKA NOMS Number or Prison Number
     id: ID!
     firstName: String!
     lastName: String!
     dateOfBirth: String!
+    # sentences known to HMPPS
     sentences: [Sentence]
+    # all current offender managers
     offenderManagers: [OffenderManager]
 }
 
 type Sentence {
     id: ID!
+    # Main sentence category (e.g. "ORA CJA03 Standard Determinate Sentence")
     description: String!
+    # Human readable length including time unit (e.g. "3 years")
     length: String!
     startDate: String!
     offenderId: ID!
@@ -32,11 +40,15 @@ type OffenderManager {
     id: ID!
     firstName: String!
     lastName: String!
+    # true then this OM is currently the main manager for the offender
     responsibleOffice: Boolean!
+    # indicates if the OM is based in prison or the community
     type: OMType!
 }
 
 enum OMType {
+    # Also known as a COM
     COMMUNITY
+    # Also known as a POM
     PRISON
 }

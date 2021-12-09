@@ -15,6 +15,7 @@ import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderSentenceOffencesServ
 import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderSentenceService
 import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderService
 
+@Suppress("unused")
 @Controller
 class OffenderGraphqlController(
   private val offenderService: OffenderService,
