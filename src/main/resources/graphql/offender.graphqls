@@ -1,0 +1,28 @@
+type Query {
+    offenders: [Offender]
+    offendersByLastName (lastName: String): [Offender]
+    offenderById (id: String): Offender
+}
+
+type Offender {
+    id: ID
+    firstName: String
+    lastName: String
+    dateOfBirth: String
+    sentences: [Sentence]
+}
+
+type Sentence {
+    id: ID
+    description: String
+    length: String
+    startDate: String
+    offenderId: ID
+    offences: [Offence]
+}
+
+type Offence {
+    id: ID
+    description: String
+    sentenceId: ID
+}
