@@ -28,7 +28,6 @@ class OffenderSentenceService {
         Sentence(
           id = "${offender.id}$it",
           description = randomDescription(),
-          offenderId = offender.id,
           length = randomLength(),
           startDate = LocalDate.now().minusDays(Random.nextLong(999))
         )

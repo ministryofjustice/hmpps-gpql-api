@@ -12,7 +12,6 @@ data class Offender(
 data class Sentence(
   val id: String,
   val description: String,
-  val offenderId: String,
   val length: String,
   val startDate: LocalDate,
 )
