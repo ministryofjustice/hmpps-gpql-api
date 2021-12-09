@@ -73,7 +73,7 @@ class OffenderService {
   }
 
   fun findByLastName(lastName: String): Flux<Offender> =
-    Flux.fromIterable(OFFENDERS).filter { it.lastName == lastName }
+    Flux.fromIterable(OFFENDERS).filter { it.lastName.lowercase() == lastName.lowercase() }
 
   fun findById(id: String): Mono<Offender> =
     Mono.justOrEmpty(OFFENDERS.find { it.id == id })
