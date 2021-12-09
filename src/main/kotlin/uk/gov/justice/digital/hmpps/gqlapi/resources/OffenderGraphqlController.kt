@@ -8,7 +8,9 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import uk.gov.justice.digital.hmpps.gqlapi.data.Offence
 import uk.gov.justice.digital.hmpps.gqlapi.data.Offender
+import uk.gov.justice.digital.hmpps.gqlapi.data.OffenderManager
 import uk.gov.justice.digital.hmpps.gqlapi.data.Sentence
+import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderManagerService
 import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderSentenceOffencesService
 import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderSentenceService
 import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderService
@@ -17,7 +19,8 @@ import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderService
 class OffenderGraphqlController(
   private val offenderService: OffenderService,
   private val offenderSentenceService: OffenderSentenceService,
-  private val offenderSentenceOffencesService: OffenderSentenceOffencesService
+  private val offenderSentenceOffencesService: OffenderSentenceOffencesService,
+  private val offenderManagerService: OffenderManagerService,
 ) {
 
   @QueryMapping
@@ -34,4 +37,7 @@ class OffenderGraphqlController(
 
   @SchemaMapping
   fun offences(sentence: Sentence): Flux<Offence> = offenderSentenceOffencesService.findBySentence(sentence)
+
+  @SchemaMapping
+  fun offenderManagers(offender: Offender): Flux<OffenderManager> = offenderManagerService.findByOffender(offender)
 }

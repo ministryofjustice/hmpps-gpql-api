@@ -22,3 +22,16 @@ data class Offence(
   val description: String,
   val sentenceId: String,
 )
+
+data class OffenderManager(
+  val id: String,
+  val firstName: String,
+  val lastName: String,
+  val responsibleOffice: Boolean,
+  val type: OMType,
+)
+
+enum class OMType {
+  COMMUNITY,
+  PRISON,
+}

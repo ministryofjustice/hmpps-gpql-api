@@ -5,24 +5,38 @@ type Query {
 }
 
 type Offender {
-    id: ID
-    firstName: String
-    lastName: String
-    dateOfBirth: String
+    id: ID!
+    firstName: String!
+    lastName: String!
+    dateOfBirth: String!
     sentences: [Sentence]
+    offenderManagers: [OffenderManager]
 }
 
 type Sentence {
-    id: ID
-    description: String
-    length: String
-    startDate: String
-    offenderId: ID
-    offences: [Offence]
+    id: ID!
+    description: String!
+    length: String!
+    startDate: String!
+    offenderId: ID!
+    offences: [Offence]!
 }
 
 type Offence {
-    id: ID
-    description: String
-    sentenceId: ID
+    id: ID!
+    description: String!
+    sentenceId: ID!
+}
+
+type OffenderManager {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    responsibleOffice: Boolean!
+    type: OMType!
+}
+
+enum OMType {
+    COMMUNITY
+    PRISON
 }
