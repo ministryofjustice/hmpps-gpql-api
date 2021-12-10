@@ -4,3 +4,15 @@ server:
 management.endpoint:
   health.cache.time-to-live: 0
   info.cache.time-to-live: 0
+
+api:
+  base:
+    url:
+      oauth: http://localhost:8090/auth
+
+prison:
+  endpoint.url: http://localhost:8093
+
+community:
+  endpoint.url: http://localhost:8096
+
