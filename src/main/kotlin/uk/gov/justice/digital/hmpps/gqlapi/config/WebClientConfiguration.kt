@@ -11,9 +11,11 @@ import org.springframework.web.reactive.function.client.WebClient
 import uk.gov.justice.digital.hmpps.gqlapi.utils.UserContext
 
 @Configuration
-class WebClientConfiguration(@Value("\${api.base.url.oauth}") val authBaseUri: String,
-                             @Value("\${community.endpoint.url}") private val communityRootUri: String,
-                             @Value("\${prison.endpoint.url}") private val prisonRootUri: String) {
+class WebClientConfiguration(
+  @Value("\${api.base.url.oauth}") val authBaseUri: String,
+  @Value("\${community.endpoint.url}") private val communityRootUri: String,
+  @Value("\${prison.endpoint.url}") private val prisonRootUri: String
+) {
 
   @Bean
   fun authWebClient(builder: WebClient.Builder): WebClient {
@@ -47,6 +49,4 @@ class WebClientConfiguration(@Value("\${api.base.url.oauth}") val authBaseUri: S
       next.exchange(filtered)
     }
   }
-
-
 }

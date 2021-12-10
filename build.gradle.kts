@@ -28,8 +28,6 @@ dependencies {
   developmentOnly("org.springframework.boot:spring-boot-devtools")
 
   testImplementation("io.jsonwebtoken:jjwt:0.9.1")
-
-
 }
 
 java {
