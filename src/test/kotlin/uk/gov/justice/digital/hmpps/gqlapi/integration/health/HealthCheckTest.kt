@@ -11,6 +11,7 @@ class HealthCheckTest : IntegrationTestBase() {
 
   @Test
   fun `Health page reports ok`() {
+    stubPingWithResponse(200)
     webTestClient.get()
       .uri("/health")
       .exchange()
@@ -22,6 +23,7 @@ class HealthCheckTest : IntegrationTestBase() {
 
   @Test
   fun `Health info reports version`() {
+    stubPingWithResponse(200)
     webTestClient.get().uri("/health")
       .exchange()
       .expectStatus().isOk
@@ -63,5 +65,11 @@ class HealthCheckTest : IntegrationTestBase() {
       .isOk
       .expectBody()
       .jsonPath("status").isEqualTo("UP")
+  }
+
+  private fun stubPingWithResponse(status: Int) {
+    hmppsAuthMockServer.stubHealthPing(status)
+    prisonApiMockServer.stubHealthPing(status)
+    communityApiMockServer.stubHealthPing(status)
   }
 }

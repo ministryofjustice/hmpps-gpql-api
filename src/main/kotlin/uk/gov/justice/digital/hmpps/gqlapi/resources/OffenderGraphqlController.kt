@@ -3,6 +3,7 @@ package uk.gov.justice.digital.hmpps.gqlapi.resources
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -17,6 +18,7 @@ import uk.gov.justice.digital.hmpps.gqlapi.services.OffenderService
 
 @Suppress("unused")
 @Controller
+@PreAuthorize("hasRole('ROLE_GRAPHQL_QUERY')")
 class OffenderGraphqlController(
   private val offenderService: OffenderService,
   private val offenderSentenceService: OffenderSentenceService,

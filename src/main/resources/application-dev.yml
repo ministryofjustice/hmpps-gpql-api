@@ -1,0 +1,8 @@
+api:
+  base:
+    url:
+      oauth: http://localhost:9090/auth
+      community: http://localhost:8083
+      prison: http://localhost:8082
+
+
