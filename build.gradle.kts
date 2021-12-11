@@ -27,7 +27,11 @@ dependencies {
 
   developmentOnly("org.springframework.boot:spring-boot-devtools")
 
+  testImplementation("org.awaitility:awaitility-kotlin:4.1.1")
   testImplementation("io.jsonwebtoken:jjwt:0.9.1")
+  testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+  testImplementation("com.github.tomakehurst:wiremock-standalone:2.27.2")
+  testImplementation("org.mockito:mockito-inline:4.1.0")
 }
 
 java {

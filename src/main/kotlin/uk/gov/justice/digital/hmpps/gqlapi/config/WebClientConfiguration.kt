@@ -13,8 +13,8 @@ import uk.gov.justice.digital.hmpps.gqlapi.utils.UserContext
 @Configuration
 class WebClientConfiguration(
   @Value("\${api.base.url.oauth}") val authBaseUri: String,
-  @Value("\${community.endpoint.url}") private val communityRootUri: String,
-  @Value("\${prison.endpoint.url}") private val prisonRootUri: String
+  @Value("\${api.base.url.community}") private val communityRootUri: String,
+  @Value("\${api.base.url.prison}") private val prisonRootUri: String
 ) {
 
   @Bean
@@ -34,7 +34,7 @@ class WebClientConfiguration(
   }
 
   @Bean
-  fun probationWebClient(builder: WebClient.Builder): WebClient {
+  fun communityWebClient(builder: WebClient.Builder): WebClient {
     return builder
       .baseUrl(communityRootUri)
       .filter(addAuthHeaderFilterFunction())

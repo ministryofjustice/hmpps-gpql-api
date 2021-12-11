@@ -9,10 +9,6 @@ api:
   base:
     url:
       oauth: http://localhost:8090/auth
-
-prison:
-  endpoint.url: http://localhost:8093
-
-community:
-  endpoint.url: http://localhost:8096
+      community: http://localhost:8096
+      prison: http://localhost:8093
 
