@@ -3,12 +3,7 @@ package uk.gov.justice.digital.hmpps.gqlapi.config
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpHeaders
-import org.springframework.web.reactive.function.client.ClientRequest
-import org.springframework.web.reactive.function.client.ExchangeFilterFunction
-import org.springframework.web.reactive.function.client.ExchangeFunction
 import org.springframework.web.reactive.function.client.WebClient
-import uk.gov.justice.digital.hmpps.gqlapi.utils.UserContext
 
 @Configuration
 class WebClientConfiguration(
@@ -18,35 +13,39 @@ class WebClientConfiguration(
 ) {
 
   @Bean
-  fun authWebClient(builder: WebClient.Builder): WebClient {
-    return builder
+  fun authWebClient(): WebClient {
+    return WebClient.builder()
       .baseUrl(authBaseUri)
-      .filter(addAuthHeaderFilterFunction())
       .build()
   }
 
   @Bean
-  fun prisonWebClient(builder: WebClient.Builder): WebClient {
-    return builder
+  fun prisonWebClient(): WebClient {
+    return WebClient.builder()
       .baseUrl(prisonRootUri)
-      .filter(addAuthHeaderFilterFunction())
+      .filter(AuthTokenFilterFunction())
       .build()
   }
 
   @Bean
-  fun communityWebClient(builder: WebClient.Builder): WebClient {
-    return builder
-      .baseUrl(communityRootUri)
-      .filter(addAuthHeaderFilterFunction())
+  fun prisonHealthWebClient(): WebClient {
+    return WebClient.builder()
+      .baseUrl(prisonRootUri)
       .build()
   }
 
-  private fun addAuthHeaderFilterFunction(): ExchangeFilterFunction {
-    return ExchangeFilterFunction { request: ClientRequest, next: ExchangeFunction ->
-      val filtered = ClientRequest.from(request)
-        .header(HttpHeaders.AUTHORIZATION, UserContext.getAuthToken())
-        .build()
-      next.exchange(filtered)
-    }
+  @Bean
+  fun communityWebClient(): WebClient {
+    return WebClient.builder()
+      .baseUrl(communityRootUri)
+      .filter(AuthTokenFilterFunction())
+      .build()
+  }
+
+  @Bean
+  fun communityHealthWebClient(): WebClient {
+    return WebClient.builder()
+      .baseUrl(communityRootUri)
+      .build()
   }
 }

@@ -1,6 +1,4 @@
 type Query {
-    # Get a list of offenders
-    offenders: [Offender]
     # Get a list of offenders last name
     offendersByLastName (lastName: String): [Offender]
     # Get a specific offender by id (also known as NOMS or Prison number)
