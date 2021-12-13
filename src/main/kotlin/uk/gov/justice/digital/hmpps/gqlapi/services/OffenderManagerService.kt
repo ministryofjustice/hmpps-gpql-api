@@ -5,23 +5,21 @@ import reactor.core.publisher.Flux
 import uk.gov.justice.digital.hmpps.gqlapi.data.OMType
 import uk.gov.justice.digital.hmpps.gqlapi.data.Offender
 import uk.gov.justice.digital.hmpps.gqlapi.data.OffenderManager
-import kotlin.random.Random
 
 @Service
-class OffenderManagerService {
+class OffenderManagerService(private val communityApiService: CommunityApiService) {
   fun findByOffender(offender: Offender): Flux<OffenderManager> =
-    Flux.fromIterable(1..Random.nextInt(1, 3))
-      .map {
-        OffenderManager(
-          id = "${offender.id}$it",
-          firstName = "Gunder",
-          lastName = "Jordan",
-          responsibleOffice = it == 1,
-          type = if (it == 1) {
-            OMType.COMMUNITY
-          } else {
-            OMType.PRISON
-          },
-        )
-      }
+    communityApiService.findOffenderManagersByNOMSNumber(offender.id).map {
+      OffenderManager(
+        id = "${it.staffId}",
+        firstName = it.staff.forenames,
+        lastName = it.staff.surname,
+        type = if (it.isPrisonOffenderManager) {
+          OMType.PRISON
+        } else {
+          OMType.COMMUNITY
+        },
+        responsibleOffice = it.isResponsibleOfficer
+      )
+    }
 }

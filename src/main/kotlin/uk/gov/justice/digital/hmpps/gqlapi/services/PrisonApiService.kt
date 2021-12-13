@@ -87,19 +87,19 @@ data class Terms(
     get() = "${toYears()}${toMonths()}${toWeeks()}${toDays()}"
 
   private fun toDays(): String {
-    return days?.let { "$days days " } ?: ""
+    return days?.let { "$days Days " } ?: ""
   }
 
   private fun toWeeks(): String {
-    return weeks?.let { "$weeks weeks " } ?: ""
+    return weeks?.let { "$weeks Weeks " } ?: ""
   }
 
   private fun toMonths(): String {
-    return months?.let { "$months months " } ?: ""
+    return months?.let { "$months Months " } ?: ""
   }
 
   private fun toYears(): String {
-    return years?.let { "$years years " } ?: ""
+    return years?.let { "$years Years " } ?: ""
   }
 }
 
