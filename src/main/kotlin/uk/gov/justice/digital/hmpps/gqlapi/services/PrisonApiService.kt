@@ -23,6 +23,13 @@ class PrisonApiService(private val prisonWebClient: WebClient) {
       .retrieve()
       .bodyToFlux(PrisonerDetail::class.java)
   }
+
+  fun findSentencesByPrisonNumber(prisonNumber: String): Mono<SentenceSummary> {
+    return prisonWebClient.get()
+      .uri("/api/offenders/$prisonNumber/booking/latest/sentence-summary")
+      .retrieve()
+      .bodyToMono(SentenceSummary::class.java)
+  }
 }
 
 data class PrisonOffenderSearch(val lastName: String)
@@ -39,4 +46,64 @@ data class PrisonerDetail(
   val firstName: String,
   val lastName: String,
   val dateOfBirth: LocalDate,
+)
+
+data class SentenceSummary(
+  val latestPrisonTerm: PrisonTerm,
+  val previousPrisonTerms: List<PrisonTerm>,
+) {
+  val prisonTerms: List<PrisonTerm>
+    get() = listOf(latestPrisonTerm) + previousPrisonTerms
+}
+
+data class PrisonTerm(
+  val courtSentences: List<CourtSentences>,
+)
+
+data class CourtSentences(
+  val id: String,
+  val sentences: List<SentencesOffencesTerms>
+)
+
+data class SentencesOffencesTerms(
+  val sentenceSequence: Int,
+  val sentenceStartDate: LocalDate,
+  val sentenceTypeDescription: String,
+  val terms: List<Terms>,
+  val offences: List<OffenderOffence>,
+) {
+  // hack = only look at first term to get the sentence length
+  val length: String
+    get() = terms.firstOrNull()?.length?.trim() ?: ""
+}
+
+data class Terms(
+  val days: Int?,
+  val weeks: Int?,
+  val months: Int?,
+  val years: Int?,
+) {
+  val length: String
+    get() = "${toYears()}${toMonths()}${toWeeks()}${toDays()}"
+
+  private fun toDays(): String {
+    return days?.let { "$days days " } ?: ""
+  }
+
+  private fun toWeeks(): String {
+    return weeks?.let { "$weeks weeks " } ?: ""
+  }
+
+  private fun toMonths(): String {
+    return months?.let { "$months months " } ?: ""
+  }
+
+  private fun toYears(): String {
+    return years?.let { "$years years " } ?: ""
+  }
+}
+
+data class OffenderOffence(
+  val offenceDescription: String,
+  val offenceCode: String,
 )
