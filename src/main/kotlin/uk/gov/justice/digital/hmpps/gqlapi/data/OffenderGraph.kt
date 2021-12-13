@@ -14,12 +14,12 @@ data class Sentence(
   val description: String,
   val length: String,
   val startDate: LocalDate,
+  val offences: List<Offence>,
 )
 
 data class Offence(
   val id: String,
   val description: String,
-  val sentenceId: String,
 )
 
 data class OffenderManager(
