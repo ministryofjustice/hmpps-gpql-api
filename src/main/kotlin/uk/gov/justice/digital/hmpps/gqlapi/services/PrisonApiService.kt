@@ -7,17 +7,17 @@ import reactor.core.publisher.Mono
 import java.time.LocalDate
 
 @Service
-class PrisonApiService(private val prisonApiWebClient: WebClient) {
+class PrisonApiService(private val prisonWebClient: WebClient) {
 
   fun getOffenderById(id: String): Mono<InmateDetail> {
-    return prisonApiWebClient.get()
+    return prisonWebClient.get()
       .uri("/api/offenders/$id")
       .retrieve()
       .bodyToMono(InmateDetail::class.java)
   }
 
   fun findOffendersByLastName(lastName: String): Flux<PrisonerDetail> {
-    return prisonApiWebClient.post()
+    return prisonWebClient.post()
       .uri("/api/prisoners")
       .bodyValue(PrisonOffenderSearch(lastName = lastName))
       .retrieve()

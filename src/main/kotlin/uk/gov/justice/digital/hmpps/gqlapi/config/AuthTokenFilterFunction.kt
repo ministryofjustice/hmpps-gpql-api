@@ -1,30 +1,12 @@
 package uk.gov.justice.digital.hmpps.gqlapi.config
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.ExchangeFunction
-import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.CoreSubscriber
 import reactor.core.publisher.Mono
-
-@Configuration
-class TempWebClientConfiguration(
-  @Value("\${api.base.url.prison-api}") val prisonApiBaseUri: String
-) {
-
-  @Bean
-  fun prisonApiWebClient(builder: WebClient.Builder): WebClient {
-    return builder
-      .baseUrl(prisonApiBaseUri)
-      .filter(AuthTokenFilterFunction())
-      .build()
-  }
-}
 
 class AuthTokenFilterFunction : ExchangeFilterFunction {
 
