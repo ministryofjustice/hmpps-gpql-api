@@ -13,26 +13,39 @@ class WebClientConfiguration(
 ) {
 
   @Bean
-  fun authWebClient(builder: WebClient.Builder): WebClient {
-    return builder
+  fun authWebClient(): WebClient {
+    return WebClient.builder()
       .baseUrl(authBaseUri)
-      .filter(AuthTokenFilterFunction())
       .build()
   }
 
   @Bean
-  fun prisonWebClient(builder: WebClient.Builder): WebClient {
-    return builder
+  fun prisonWebClient(): WebClient {
+    return WebClient.builder()
       .baseUrl(prisonRootUri)
       .filter(AuthTokenFilterFunction())
       .build()
   }
 
   @Bean
-  fun communityWebClient(builder: WebClient.Builder): WebClient {
-    return builder
+  fun prisonHealthWebClient(): WebClient {
+    return WebClient.builder()
+      .baseUrl(prisonRootUri)
+      .build()
+  }
+
+  @Bean
+  fun communityWebClient(): WebClient {
+    return WebClient.builder()
       .baseUrl(communityRootUri)
       .filter(AuthTokenFilterFunction())
+      .build()
+  }
+
+  @Bean
+  fun communityHealthWebClient(): WebClient {
+    return WebClient.builder()
+      .baseUrl(communityRootUri)
       .build()
   }
 }
