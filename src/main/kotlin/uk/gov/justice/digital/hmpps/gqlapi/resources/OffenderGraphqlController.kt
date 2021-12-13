@@ -5,12 +5,12 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.graphql.web.WebInput
 import org.springframework.graphql.web.WebInterceptor
 import org.springframework.graphql.web.WebInterceptorChain
 import org.springframework.graphql.web.WebOutput
 import org.springframework.http.HttpHeaders
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
