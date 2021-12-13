@@ -19,7 +19,7 @@ class ResourceServerConfiguration : WebSecurityConfigurerAdapter() {
       .and().csrf().disable()
       .authorizeRequests { auth ->
         auth.antMatchers(
-          "/favicon.ico", "/csrf", "/health/**", "/info", "/graphiql", "/vendor/**"
+          "/favicon.ico", "/csrf", "/health/**", "/info", "/graphiql", "/graphql"
         )
           .permitAll().anyRequest().authenticated()
       }.oauth2ResourceServer().jwt().jwtAuthenticationConverter(AuthAwareTokenConverter())

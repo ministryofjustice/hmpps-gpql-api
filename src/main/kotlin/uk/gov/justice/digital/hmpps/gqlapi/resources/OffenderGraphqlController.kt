@@ -1,14 +1,9 @@
 package uk.gov.justice.digital.hmpps.gqlapi.resources
 
 import graphql.schema.DataFetchingEnvironment
-import org.springframework.context.annotation.Configuration
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
-import org.springframework.graphql.web.WebInput
-import org.springframework.graphql.web.WebInterceptor
-import org.springframework.graphql.web.WebInterceptorChain
-import org.springframework.graphql.web.WebOutput
 import org.springframework.http.HttpHeaders
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
@@ -52,17 +47,6 @@ class OffenderGraphqlController(
   @SchemaMapping
   fun offenderManagers(offender: Offender, env: DataFetchingEnvironment): Flux<OffenderManager> =
     offenderManagerService.findByOffender(offender).withToken(env)
-}
-
-@Configuration
-class AuthTokenExtractor : WebInterceptor {
-
-  override fun intercept(webInput: WebInput, chain: WebInterceptorChain): Mono<WebOutput> {
-    webInput.configureExecutionInput { _, builder ->
-      builder.graphQLContext { it.put(HttpHeaders.AUTHORIZATION, webInput.headers[HttpHeaders.AUTHORIZATION]?.first()) }.build()
-    }
-    return chain.next(webInput)
-  }
 }
 
 fun <T> Mono<T>.withToken(env: DataFetchingEnvironment): Mono<T> =
