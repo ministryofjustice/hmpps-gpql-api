@@ -26,7 +26,7 @@ data class OffenderManager(
   val id: String,
   val firstName: String,
   val lastName: String,
-  val responsibleOffice: Boolean,
+  val responsibleOfficer: Boolean,
   val type: OMType,
 )
 
