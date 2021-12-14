@@ -4,11 +4,11 @@ import graphql.schema.DataFetchingEnvironment
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.graphql.data.method.annotation.SchemaMapping
-import org.springframework.http.HttpHeaders
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import uk.gov.justice.digital.hmpps.gqlapi.config.withToken
 import uk.gov.justice.digital.hmpps.gqlapi.data.Offence
 import uk.gov.justice.digital.hmpps.gqlapi.data.Offender
 import uk.gov.justice.digital.hmpps.gqlapi.data.OffenderManager
@@ -48,9 +48,3 @@ class OffenderGraphqlController(
   fun offenderManagers(offender: Offender, env: DataFetchingEnvironment): Flux<OffenderManager> =
     offenderManagerService.findByOffender(offender).withToken(env)
 }
-
-fun <T> Mono<T>.withToken(env: DataFetchingEnvironment): Mono<T> =
-  this.contextWrite { it.put(HttpHeaders.AUTHORIZATION, env.graphQlContext.get<String>(HttpHeaders.AUTHORIZATION)) }
-
-fun <T> Flux<T>.withToken(env: DataFetchingEnvironment): Flux<T> =
-  this.contextWrite { it.put(HttpHeaders.AUTHORIZATION, env.graphQlContext.get<String>(HttpHeaders.AUTHORIZATION)) }

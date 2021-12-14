@@ -8,8 +8,11 @@ type Query {
 type Offender {
     # AKA NOMS Number or Prison Number
     id: ID!
+    # First name of offender
     firstName: String!
+    # Last name of offender
     lastName: String!
+    # Date of birth of offender
     dateOfBirth: String!
     # sentences known to HMPPS
     sentences: [Sentence]
@@ -23,23 +26,27 @@ type Sentence {
     description: String!
     # Human readable length including time unit (e.g. "3 years")
     length: String!
+    # Start date of sentence
     startDate: String!
-    offenderId: ID!
+    # offences related to this sentence
     offences: [Offence]!
 }
 
 type Offence {
+    # Unique identifier for this offence
     id: ID!
+    # Description of offence
     description: String!
-    sentenceId: ID!
 }
 
 type OffenderManager {
     id: ID!
+    # First name of manager
     firstName: String!
+    # Last name of manager
     lastName: String!
     # true then this OM is currently the main manager for the offender
-    responsibleOffice: Boolean!
+    responsibleOfficer: Boolean!
     # indicates if the OM is based in prison or the community
     type: OMType!
 }

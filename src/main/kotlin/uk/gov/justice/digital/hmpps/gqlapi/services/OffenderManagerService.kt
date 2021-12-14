@@ -19,7 +19,7 @@ class OffenderManagerService(private val communityApiService: CommunityApiServic
         } else {
           OMType.COMMUNITY
         },
-        responsibleOffice = it.isResponsibleOfficer
+        responsibleOfficer = it.isResponsibleOfficer
       )
     }
 }
