@@ -9,9 +9,9 @@ import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
 import uk.gov.justice.digital.hmpps.gqlapi.helper.JwtAuthHelper
-import uk.gov.justice.digital.hmpps.manageusersapi.integration.wiremock.CommunityApiMockServer
+import uk.gov.justice.digital.hmpps.gqlapi.integration.wiremock.CommunityApiMockServer
+import uk.gov.justice.digital.hmpps.gqlapi.integration.wiremock.PrisonApiMockServer
 import uk.gov.justice.digital.hmpps.manageusersapi.integration.wiremock.HmppsAuthMockServer
-import uk.gov.justice.digital.hmpps.manageusersapi.integration.wiremock.PrisonApiMockServer
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
@@ -34,6 +34,7 @@ abstract class IntegrationTestBase {
     @JvmField
     internal val communityApiMockServer = CommunityApiMockServer()
 
+    @Suppress("unused")
     @BeforeAll
     @JvmStatic
     fun startMocks() {
@@ -44,6 +45,7 @@ abstract class IntegrationTestBase {
       communityApiMockServer.start()
     }
 
+    @Suppress("unused")
     @AfterAll
     @JvmStatic
     fun stopMocks() {
@@ -59,5 +61,6 @@ abstract class IntegrationTestBase {
     scopes: List<String> = listOf()
   ): (HttpHeaders) -> Unit = jwtAuthHelper.setAuthorisation(user, roles, scopes)
 
+  @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
   fun readFile(file: String): String = this.javaClass.getResource(file).readText()
 }
