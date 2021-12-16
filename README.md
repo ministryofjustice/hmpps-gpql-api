@@ -33,8 +33,8 @@ This project provides a proof of concept around using GraphQL in spring boot as 
 
 ### Implementation
 
-- The server was implemented using Spring Boot and Spring GraphQL in ths project. This is viewable using the [GraphQL playground]("https://gql-api-dev.hmpps.service.justice.gov.uk/graphiql?path=/graphql)
-- Additionally, a single nodejs service was amended to call this API this is accessible [here]("https://hmpps-audit-poc-ui-dev.hmpps.service.justice.gov.uk") it requires any valid HMPPS Auth login. The code is available on [GitHub]("https://github.com/ministryofjustice/hmpps-audit-poc-ui/blob/main/server/services/graphQLDemoService.ts")
+- The server was implemented using Spring Boot and Spring GraphQL in ths project. This is viewable using the [GraphQL playground](https://gql-api-dev.hmpps.service.justice.gov.uk/graphiql?path=/graphql)
+- Additionally, a single nodejs service was amended to call this API this is accessible [here](https://hmpps-audit-poc-ui-dev.hmpps.service.justice.gov.uk) it requires any valid HMPPS Auth login. The code is available on [GitHub](https://github.com/ministryofjustice/hmpps-audit-poc-ui/blob/main/server/services/graphQLDemoService.ts)
 - No other GraphQL frameworks were considered since Spring Boot was considered a technology that is well established in HMPPS and would support concepts and techniques understandable by existing development teams. It was also known that out of box security would work.
 - Data was not accessed directly by this service but was delegated to existing APIs (prison-api and community-api) which themselves expose Rest endpoints.
 - Data was mapped from the Rest services "schema" to the new GraphQL schema proving that we can create a simpler domain language that isn't tied to the legacy systems.
