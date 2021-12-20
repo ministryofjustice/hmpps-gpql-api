@@ -1,7 +1,10 @@
 package uk.gov.justice.digital.hmpps.gqlapi.services
 
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.WebClientResponseException
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.time.LocalDate
 
@@ -14,6 +17,18 @@ class PrisonApiService(private val prisonWebClient: WebClient) {
       .retrieve()
       .bodyToMono(SentenceSummary::class.java)
   }
+
+  fun findAlertsByPrisonNumbers(prisonNumbers: List<String>): Flux<OffenderAlert> {
+    return prisonWebClient.post()
+      .uri("/api/bookings/offenderNo/alerts")
+      .bodyValue(prisonNumbers)
+      .retrieve()
+      .bodyToFlux(OffenderAlert::class.java)
+      .onErrorResume(WebClientResponseException::class.java) { emptyWhenNotFound(it) }
+  }
+  fun <T> emptyWhenNotFound(exception: WebClientResponseException): Flux<T> = emptyWhen(exception, HttpStatus.NOT_FOUND)
+  fun <T> emptyWhen(exception: WebClientResponseException, statusCode: HttpStatus): Flux<T> =
+    if (exception.rawStatusCode == statusCode.value()) Flux.empty() else Flux.error(exception)
 }
 
 data class SentenceSummary(
@@ -74,4 +89,12 @@ data class Terms(
 data class OffenderOffence(
   val offenceDescription: String,
   val offenceCode: String,
+)
+
+data class OffenderAlert(
+  val alertId: Long,
+  val offenderNo: String,
+  val alertTypeDescription: String,
+  val alertCodeDescription: String,
+  val dateCreated: LocalDate,
 )
