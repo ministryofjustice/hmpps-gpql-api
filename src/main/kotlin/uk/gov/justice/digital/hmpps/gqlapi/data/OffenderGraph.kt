@@ -30,6 +30,14 @@ data class OffenderManager(
   val type: OMType,
 )
 
+data class Alert(
+  val offenderId: String,
+  val id: String,
+  val type: String,
+  val category: String,
+  val date: LocalDate,
+)
+
 enum class OMType {
   COMMUNITY,
   PRISON,

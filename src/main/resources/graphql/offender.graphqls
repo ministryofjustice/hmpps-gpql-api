@@ -18,6 +18,18 @@ type Offender {
     sentences: [Sentence]
     # all current offender managers
     offenderManagers: [OffenderManager]
+    # all alerts for this offenders
+    alerts: [Alert]
+}
+type Alert {
+    # Unique identifier for alert
+    id: ID!
+    # Alert type
+    type: String!
+    # Alert category
+    category: String!
+    # Alert date
+    date: String!
 }
 
 type Sentence {

@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.gqlapi.config
 
+import graphql.GraphQLContext
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.context.annotation.Configuration
 import org.springframework.graphql.web.WebInput
@@ -59,5 +60,11 @@ fun <T> Mono<T>.withToken(env: DataFetchingEnvironment): Mono<T> =
 fun <T> Flux<T>.withToken(env: DataFetchingEnvironment): Flux<T> =
   this.contextWrite { transferAuthHeader(env, it) }
 
+fun <T> Mono<T>.withToken(graphQLContext: GraphQLContext): Mono<T> =
+  this.contextWrite { transferAuthHeader(graphQLContext, it) }
+
 private fun transferAuthHeader(env: DataFetchingEnvironment, context: Context) =
   context.put(HttpHeaders.AUTHORIZATION, env.graphQlContext.get<String>(HttpHeaders.AUTHORIZATION))
+
+private fun transferAuthHeader(graphQLContext: GraphQLContext, context: Context) =
+  context.put(HttpHeaders.AUTHORIZATION, graphQLContext.get<String>(HttpHeaders.AUTHORIZATION))
