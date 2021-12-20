@@ -3,7 +3,6 @@ package uk.gov.justice.digital.hmpps.gqlapi.integration.wiremock
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
 import com.github.tomakehurst.wiremock.client.WireMock.get
-import com.github.tomakehurst.wiremock.client.WireMock.post
 
 class PrisonApiMockServer : WireMockServer(WIREMOCK_PORT) {
   companion object {
@@ -17,42 +16,6 @@ class PrisonApiMockServer : WireMockServer(WIREMOCK_PORT) {
           .withHeader("Content-Type", "application/json")
           .withBody(if (status == 200) "pong" else "some error")
           .withStatus(status)
-      )
-    )
-  }
-
-  fun stubNoOffendersFound() {
-    stubFor(
-      post("/api/prisoners").willReturn(
-        aResponse()
-          .withHeader("Content-Type", "application/json")
-          .withBody(
-            """
-              []
-            """.trimIndent()
-          )
-          .withStatus(200)
-      )
-    )
-  }
-
-  fun stubSingleOffender(prisonerNumber: String) {
-    stubFor(
-      post("/api/prisoners").willReturn(
-        aResponse()
-          .withHeader("Content-Type", "application/json")
-          .withBody(
-            """
-            [
-              {
-                "offenderNo": "$prisonerNumber",
-                "firstName": "John",
-                "lastName": "Smith",
-                "dateOfBirth": "1980-01-01"
-                }
-           ]
-            """.trimIndent()
-          )
       )
     )
   }

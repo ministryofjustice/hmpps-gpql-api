@@ -11,4 +11,5 @@ api:
       oauth: http://localhost:8090/auth
       community: http://localhost:8096
       prison: http://localhost:8093
+      prisonersearch: http://localhost:8094
 

@@ -14,7 +14,8 @@ class GraphQLIntTest : IntegrationTestBase() {
   internal fun setUp() {
     communityApiMockServer.resetAll()
     prisonApiMockServer.resetAll()
-    prisonApiMockServer.stubNoOffendersFound()
+    prisonerSearchApiMockServer.resetAll()
+    prisonerSearchApiMockServer.stubNoOffendersFound()
   }
 
   @Test
@@ -41,10 +42,10 @@ class GraphQLIntTest : IntegrationTestBase() {
       .isOk
       .expectBody().jsonPath("$.errors[0].message").isEqualTo("Forbidden")
 
-    prisonApiMockServer
+    prisonerSearchApiMockServer
       .verify(
         0,
-        postRequestedFor(urlEqualTo("/api/prisoners"))
+        postRequestedFor(urlEqualTo("/global-search"))
       )
   }
 
@@ -83,16 +84,16 @@ class GraphQLIntTest : IntegrationTestBase() {
       .expectStatus()
       .isOk
 
-    prisonApiMockServer
+    prisonerSearchApiMockServer
       .verify(
-        postRequestedFor(urlEqualTo("/api/prisoners"))
+        postRequestedFor(urlEqualTo("/global-search"))
           .withRequestBody(containing("""{"lastName":"kane"}"""))
       )
   }
 
   @Test
   internal fun `will call services when query demands it`() {
-    prisonApiMockServer.stubSingleOffender("A5194DY")
+    prisonerSearchApiMockServer.stubSingleOffender("A5194DY")
     prisonApiMockServer.stubSingleSentence("A5194DY")
     communityApiMockServer.stubConvictions("A5194DY")
     communityApiMockServer.stubOffenderManagers("A5194DY")
@@ -133,14 +134,14 @@ class GraphQLIntTest : IntegrationTestBase() {
       .expectStatus()
       .isOk
 
-    prisonApiMockServer.verify(postRequestedFor(urlEqualTo("/api/prisoners")))
+    prisonerSearchApiMockServer.verify(postRequestedFor(urlEqualTo("/global-search")))
     prisonApiMockServer.verify(getRequestedFor(urlEqualTo("/api/offenders/A5194DY/booking/latest/sentence-summary")))
     communityApiMockServer.verify(getRequestedFor(urlEqualTo("/secure/offenders/nomsNumber/A5194DY/convictions")))
     communityApiMockServer.verify(getRequestedFor(urlEqualTo("/secure/offenders/nomsNumber/A5194DY/allOffenderManagers")))
   }
   @Test
   internal fun `will not call services when query does not demand it`() {
-    prisonApiMockServer.stubSingleOffender("A5194DY")
+    prisonerSearchApiMockServer.stubSingleOffender("A5194DY")
     prisonApiMockServer.stubSingleSentence("A5194DY")
     communityApiMockServer.stubConvictions("A5194DY")
     communityApiMockServer.stubOffenderManagers("A5194DY")
@@ -167,7 +168,7 @@ class GraphQLIntTest : IntegrationTestBase() {
       .expectStatus()
       .isOk
 
-    prisonApiMockServer.verify(postRequestedFor(urlEqualTo("/api/prisoners")))
+    prisonerSearchApiMockServer.verify(postRequestedFor(urlEqualTo("/global-search")))
     prisonApiMockServer.verify(0, getRequestedFor(urlEqualTo("/api/offenders/A5194DY/booking/latest/sentence-summary")))
     communityApiMockServer.verify(0, getRequestedFor(urlEqualTo("/secure/offenders/nomsNumber/A5194DY/convictions")))
     communityApiMockServer.verify(0, getRequestedFor(urlEqualTo("/secure/offenders/nomsNumber/A5194DY/allOffenderManagers")))
@@ -175,7 +176,7 @@ class GraphQLIntTest : IntegrationTestBase() {
 
   @Test
   internal fun `will return JSON data combing all queries`() {
-    prisonApiMockServer.stubSingleOffender("A5194DY")
+    prisonerSearchApiMockServer.stubSingleOffender("A5194DY")
     prisonApiMockServer.stubSingleSentence("A5194DY")
     communityApiMockServer.stubConvictions("A5194DY")
     communityApiMockServer.stubOffenderManagers("A5194DY")
@@ -270,7 +271,7 @@ class GraphQLIntTest : IntegrationTestBase() {
   }
   @Test
   internal fun `will return JSON data combing ony required queries`() {
-    prisonApiMockServer.stubSingleOffender("A5194DY")
+    prisonerSearchApiMockServer.stubSingleOffender("A5194DY")
 
     webTestClient.post()
       .uri("/graphql")
@@ -313,7 +314,7 @@ class GraphQLIntTest : IntegrationTestBase() {
 
   @Test
   internal fun `will not error when some down stream services find no data`() {
-    prisonApiMockServer.stubSingleOffender("A5194DY")
+    prisonerSearchApiMockServer.stubSingleOffender("A5194DY")
     prisonApiMockServer.stubSingleSentence("A5194DY")
     communityApiMockServer.stubOffenderNotFound("A5194DY")
 
