@@ -71,5 +71,6 @@ class HealthCheckTest : IntegrationTestBase() {
     hmppsAuthMockServer.stubHealthPing(status)
     prisonApiMockServer.stubHealthPing(status)
     communityApiMockServer.stubHealthPing(status)
+    prisonerSearchApiMockServer.stubHealthPing(status)
   }
 }

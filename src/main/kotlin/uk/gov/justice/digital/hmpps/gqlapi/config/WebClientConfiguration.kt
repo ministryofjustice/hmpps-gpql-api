@@ -9,7 +9,8 @@ import org.springframework.web.reactive.function.client.WebClient
 class WebClientConfiguration(
   @Value("\${api.base.url.oauth}") val authBaseUri: String,
   @Value("\${api.base.url.community}") private val communityRootUri: String,
-  @Value("\${api.base.url.prison}") private val prisonRootUri: String
+  @Value("\${api.base.url.prison}") private val prisonRootUri: String,
+  @Value("\${api.base.url.prisonersearch}") private val prisonerSearchRootUri: String
 ) {
 
   @Bean
@@ -20,10 +21,25 @@ class WebClientConfiguration(
   }
 
   @Bean
+  fun prisonerSearchWebClient(): WebClient {
+    return WebClient.builder()
+      .baseUrl(prisonerSearchRootUri)
+      .filter(AuthTokenFilterFunction())
+      .build()
+  }
+
+  @Bean
   fun prisonWebClient(): WebClient {
     return WebClient.builder()
       .baseUrl(prisonRootUri)
       .filter(AuthTokenFilterFunction())
+      .build()
+  }
+
+  @Bean
+  fun prisonerSearchHealthWebClient(): WebClient {
+    return WebClient.builder()
+      .baseUrl(prisonerSearchRootUri)
       .build()
   }
 
