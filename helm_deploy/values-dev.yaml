@@ -1,5 +1,5 @@
 ---
-# Per environment values which override defaults in gql-api/values.yaml
+# Per environment values which override defaults in hmpps-gpql-api/values.yaml
 
 generic-service:
   replicaCount: 2

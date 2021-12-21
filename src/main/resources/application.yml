@@ -4,7 +4,7 @@ info.app:
 
 spring:
   application:
-    name: gql-api
+    name: hmpps-gpql-api
   codec:
     max-in-memory-size: 10MB
 

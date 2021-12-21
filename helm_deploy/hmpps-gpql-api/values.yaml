@@ -1,6 +1,6 @@
 ---
 generic-service:
-  nameOverride: gql-api
+  nameOverride: hmpps-gpql-api
 
   replicaCount: 4
 
