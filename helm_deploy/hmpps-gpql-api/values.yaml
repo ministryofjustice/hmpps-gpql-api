@@ -5,7 +5,7 @@ generic-service:
   replicaCount: 4
 
   image:
-    repository: quay.io/hmpps/hmpps-gql-api
+    repository: quay.io/hmpps/hmpps-gpql-api
     tag: app_version    # override at deployment time
     port: 8080
 
@@ -28,7 +28,7 @@ generic-service:
   #     [name of environment variable as seen by app]: [key of kubernetes secret to load]
 
   namespace_secrets:
-    hmpps-gql-api:
+    hmpps-gpql-api:
       APPINSIGHTS_INSTRUMENTATIONKEY: "APPINSIGHTS_INSTRUMENTATIONKEY"
 
   allowlist:
@@ -40,4 +40,4 @@ generic-service:
     cloudplatform-live1-3: "35.177.252.54/32"
 
 generic-prometheus-alerts:
-  targetApplication: hmpps-gql-api
+  targetApplication: hmpps-gpql-api
