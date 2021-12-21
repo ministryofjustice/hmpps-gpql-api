@@ -1,12 +1,9 @@
 package uk.gov.justice.digital.hmpps.gqlapi.services
 
-import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 import java.time.LocalDate
 
 @Service
@@ -26,9 +23,6 @@ class CommunityApiService(private val communityWebClient: WebClient) {
       .bodyToFlux(Conviction::class.java)
       .onErrorResume(WebClientResponseException::class.java) { emptyWhenNotFound(it) }
   }
-  fun <T> emptyWhenNotFound(exception: WebClientResponseException): Mono<T> = emptyWhen(exception, NOT_FOUND)
-  fun <T> emptyWhen(exception: WebClientResponseException, statusCode: HttpStatus): Mono<T> =
-    if (exception.rawStatusCode == statusCode.value()) Mono.empty() else Mono.error(exception)
 }
 
 data class CommunityOrPrisonOffenderManager(

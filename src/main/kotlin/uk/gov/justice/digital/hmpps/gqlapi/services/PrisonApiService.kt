@@ -1,6 +1,5 @@
 package uk.gov.justice.digital.hmpps.gqlapi.services
 
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
@@ -16,6 +15,7 @@ class PrisonApiService(private val prisonWebClient: WebClient) {
       .uri("/api/offenders/$prisonNumber/booking/latest/sentence-summary")
       .retrieve()
       .bodyToMono(SentenceSummary::class.java)
+      .onErrorResume(WebClientResponseException::class.java) { emptyWhenNotFound(it) }
   }
 
   fun findAlertsByPrisonNumbers(prisonNumbers: List<String>): Flux<OffenderAlert> {
@@ -26,9 +26,6 @@ class PrisonApiService(private val prisonWebClient: WebClient) {
       .bodyToFlux(OffenderAlert::class.java)
       .onErrorResume(WebClientResponseException::class.java) { emptyWhenNotFound(it) }
   }
-  fun <T> emptyWhenNotFound(exception: WebClientResponseException): Flux<T> = emptyWhen(exception, HttpStatus.NOT_FOUND)
-  fun <T> emptyWhen(exception: WebClientResponseException, statusCode: HttpStatus): Flux<T> =
-    if (exception.rawStatusCode == statusCode.value()) Flux.empty() else Flux.error(exception)
 }
 
 data class SentenceSummary(
