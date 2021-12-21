@@ -1,6 +1,6 @@
 {
   "role": {
-    "name": "gql-api"
+    "name": "hmpps-gpql-api"
   },
   "customDimensions": {
     "service.version": "${BUILD_NUMBER}"

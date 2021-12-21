@@ -50,7 +50,7 @@ class JwtAuthHelper() {
   ): String =
     mutableMapOf<String, Any>()
       .also { subject?.let { subject -> it["user_name"] = subject } }
-      .also { it["client_id"] = "gql-api" }
+      .also { it["client_id"] = "hmpps-gpql-api" }
       .also { roles?.let { roles -> it["authorities"] = roles } }
       .also { scope?.let { scope -> it["scope"] = scope } }
       .let {

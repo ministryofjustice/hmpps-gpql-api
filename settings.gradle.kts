@@ -1,1 +1,1 @@
-rootProject.name = "gql-api"
+rootProject.name = "hmpps-gpql-api"

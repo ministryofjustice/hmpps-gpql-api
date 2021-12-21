@@ -1,10 +1,10 @@
 version: "3"
 services:
-  gql-api:
+  hmpps-gpql-api:
     build:
       context: .
     network_mode: "host"
-    container_name: gql-api
+    container_name: hmpps-gpql-api
     ports:
       - "8081:8080"
     healthcheck:
