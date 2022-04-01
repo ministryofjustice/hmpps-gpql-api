@@ -16,7 +16,7 @@ class InfoTest : IntegrationTestBase() {
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("app.name").isEqualTo("Gql Api")
+      .jsonPath("build.name").isEqualTo("hmpps-gpql-api")
   }
 
   @Test
