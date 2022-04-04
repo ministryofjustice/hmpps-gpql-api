@@ -1,6 +1,6 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "3.3.14"
-  kotlin("plugin.spring") version "1.6.0"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "4.1.3-beta"
+  kotlin("plugin.spring") version "1.6.10"
 }
 
 repositories {
@@ -17,7 +17,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
   implementation("org.springframework.boot:spring-boot-starter-security")
   implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
-  implementation("org.springframework.experimental:graphql-spring-boot-starter:1.0.0-M3")
+  implementation("org.springframework.experimental:graphql-spring-boot-starter:1.0.0-M4")
 
   implementation("org.apache.commons:commons-lang3:3.12.0")
   implementation("org.apache.commons:commons-text:1.9")
@@ -27,11 +27,11 @@ dependencies {
 
   developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-  testImplementation("org.awaitility:awaitility-kotlin:4.1.1")
+  testImplementation("org.awaitility:awaitility-kotlin:4.2.0")
   testImplementation("io.jsonwebtoken:jjwt:0.9.1")
   testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
   testImplementation("com.github.tomakehurst:wiremock-standalone:2.27.2")
-  testImplementation("org.mockito:mockito-inline:4.1.0")
+  testImplementation("org.mockito:mockito-inline:4.4.0")
 }
 
 java {
@@ -41,7 +41,7 @@ java {
 tasks {
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-      jvmTarget = "16"
+      jvmTarget = "17"
     }
   }
 }
