@@ -3,10 +3,9 @@ package uk.gov.justice.digital.hmpps.gqlapi.config
 import graphql.GraphQLContext
 import graphql.schema.DataFetchingEnvironment
 import org.springframework.context.annotation.Configuration
-import org.springframework.graphql.web.WebInput
-import org.springframework.graphql.web.WebInterceptor
-import org.springframework.graphql.web.WebInterceptorChain
-import org.springframework.graphql.web.WebOutput
+import org.springframework.graphql.server.WebGraphQlInterceptor
+import org.springframework.graphql.server.WebGraphQlRequest
+import org.springframework.graphql.server.WebGraphQlResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ClientResponse
@@ -39,9 +38,9 @@ class AuthTokenResponseMono(
 }
 
 @Configuration
-class AuthTokenExtractor : WebInterceptor {
+class AuthTokenExtractor : WebGraphQlInterceptor {
 
-  override fun intercept(webInput: WebInput, chain: WebInterceptorChain): Mono<WebOutput> {
+  override fun intercept(webInput: WebGraphQlRequest, chain: WebGraphQlInterceptor.Chain): Mono<WebGraphQlResponse> {
     webInput.configureExecutionInput { _, builder ->
       builder.graphQLContext {
         it.put(

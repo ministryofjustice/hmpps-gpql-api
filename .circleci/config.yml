@@ -65,7 +65,7 @@ workflows:
   security:
     triggers:
       - schedule:
-          cron: "23 8 * * 1-5"
+          cron: "23 8 1 * *"
           filters:
             branches:
               only:
@@ -88,7 +88,7 @@ workflows:
   security-weekly:
     triggers:
       - schedule:
-          cron: "37 8 * * 1"
+          cron: "37 8 1 * *"
           filters:
             branches:
               only:
